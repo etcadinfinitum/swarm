@@ -1,23 +1,26 @@
-# Digest of _Graph Grammars for Self Assembling Robotic Systems_ by Klavins et. al.
+# Digest of _Graph Grammars for Self Assembling Robotic Systems_ by Klavins et al
 
-The mathematics illustrated in this paper may be confusing and 
-appear unapproachable for an engineer without the benefit of advanced 
-study of mathematics. The key points of the paper are restated here 
-for clarity, and to orient subsequent research in this topic.
+The mathematics illustrated in [the aforementioned paper](klavins_graphgrammars.pdf) 
+may be confusing and appear unapproachable for an engineer without the 
+benefit of advanced study of mathematics. The key points of the paper are 
+restated here for clarity, and to orient subsequent research in this topic.
 
 ## Language Clarification
 
 The following terms are used which are not present in the original 
 publication:
 
-1. **Identity** is used to distinguish a single unique vertex or edge. It is 
-   distinct from _label_, which is formally defined in the paper. Such 
-   a distinction is useful for us when describing the preservation of 
+1. **Identity** is used to distinguish a single unique vertex or edge, 
+   much like a fingerprint or DNA sequence does for a human being. It is 
+   distinct from _label_, which is formally defined in the paper. 
+   Similar terminology is used in the work by Bishop et al.
+   Such a distinction is useful for us when describing the preservation of 
    members between sets and establishing a one-to-one relationship between 
-   one or more members of disparate sets. Pointer addresses are a useful analogy for 
+   one or more members of disparate sets, despite the corresponding labels 
+   for set members being in flux. Pointer addresses are a useful analogy for 
    computer science professionals, though not a fully sufficient analogy 
-   due to object destruction and the possible of address allocation for 
-   a different unique object.
+   due to object destruction and the possibility of the allocation of the 
+   previously used address for a different unique object.
 
 ## Defining a Graph
 
@@ -25,9 +28,9 @@ publication:
 
 A graph is defined as a triple consisting of a set of vertices _V_, a set 
 of vertex pairs representing edge relationships between the 
-vertices (_E_), and a function _l_ which assigns a string label to each vertex. 
+vertices (_E_), and a function &ell; which assigns a string label to each vertex. 
 
-This definition is more explicitly named as a _simple labeled graph_, 
+This definition is more explicitly named as a **simple labeled graph**, 
 and such a distinction matters due specifically to the labeling mechanism, 
 which isn't a typical component of a graph structure in computer science. 
 
@@ -37,7 +40,7 @@ disparate graphs which have identical or similar states.
 
 #### Graph Connectivity
 
-Two vertices in a graph _G_ are _connected_ if there is a path (sequence 
+Two vertices in a graph _G_ are **connected** if there is a path (sequence 
 of edges) connecting them in _G_. 
 
 Graph connectivity serves as an equivalence partition on _V_; each subset 
@@ -46,11 +49,11 @@ in _G_.
 
 For instance, consider the following graph _G_:
 
-![img/connected-graph.png](A partially connected graph)
+![A partially connected graph](img/connected-graph.png)
 
 We suppose _V<sub>G</sub> = { A, B, C, D, E }_. We further deduce that 
-the connectivity relation on _V_ is _{ {A, C}, {B}, {D, E} }_. Each 
-subset of the connectivity relation is called a component.
+the connectivity relation on _V<sub>G</sub>_ is _{ {A, C}, {B}, {D, E} }_. Each 
+subset of the connectivity relation is called a **component**.
 
 Formally, a connected graph _G_ has only a single component; that is, 
 there are no two vertices in _G_ that are not connected through one or 
@@ -63,21 +66,21 @@ together by at least one path.
 ## Defining Embeddings
 
 In Part A, a label preserving embedding (or label-preserving embedding) function 
-is defined as ***h : G1 --> G2*** with the following 3 properties:
+is defined as ***h : G<sub>1</sub> --> G<sub>2</sub>*** with the following 3 properties:
 
-1. _h_ is injective, implying that G1 is a subset of G2; this does not 
-   imply that G1 is a proper subset of G2. If the two edge and vertex sets are equal, 
+1. _h_ is injective, implying that _G<sub>1</sub>_ is a subset of _G<sub>2</sub>_; this does not 
+   imply that _G<sub>1</sub>_ is a proper subset of _G<sub>2</sub>_. If the two edge and vertex sets are equal, 
    _h_ is considered bijective. When this is true, the graph can be 
    considered isomorphic (structurally identical). A review of the formal 
    definition of graph isomorphism (see Rosen et. al.) shows that a one-to-one 
-   function exists that relates _l_ of G1 to _l_ of G2, and that the equality 
-   of edge sets of G1 and G2 can be demonstrated with the application of this 
+   function exists that relates &ell; of _G<sub>1</sub>_ to &ell; of _G<sub>2</sub>_, and that the equality 
+   of edge sets of _G<sub>1</sub>_ and _G<sub>2</sub>_ can be demonstrated with the application of this 
    one-to-one function.
-2. Each vertex pair present in _E_ of G1 is also present in _E_ of G2, 
+2. Each vertex pair present in _E_ of _G<sub>1</sub>_ is also present in _E_ of _G<sub>2</sub>_, 
    and _h_ relates the two pairs. An application of _h_ may result in a label 
    mapping change, and this property will still be true.
-3. The labeling function of G1 may be reproduced by the labeling function 
-   of G2 as a function of h.
+3. The labeling function of _G<sub>1</sub>_ may be reproduced by the labeling function 
+   of _G<sub>2</sub>_ as a function of h.
 
 Embeddings become particularly useful in Definition 3.2, which states that 
 an arbitrary graph _L_ may be considered a subsection of an arbitrary graph 
@@ -99,7 +102,7 @@ the rest of the universe.
 ### Rule Types
 
 If we assume that _L_ and _R_ are not necessarily equal, then _E_ and/or 
-_l_ must differ. The paper further quantifies types of rules:
+&ell; must differ. The paper further quantifies types of rules:
 
 * A constructive rule is symbolically defined by _E_ of _L_ being a proper subset of _R_'s 
 edge set.
@@ -114,7 +117,7 @@ the two properties:
 
 1. Under the constraints listed above, the rule neither produces a new 
    identified edge nor removes an edge which existed in _L_. Such an interpretation 
-   implies that only _l_ is changed between _L_ and _R_, since the identitified 
+   implies that only &ell; is changed between _L_ and _R_, since the identitified 
    edges between _L_ and _R_ would remain the same. The trivial example 
    given in the paper's Example 3.3 supports this interpretation of a mixed 
    rule, and all given examples of constructive and destructive rules imply 
@@ -130,15 +133,15 @@ Some clarification on the types of rules and rule behavior is needed.
 
 ### Rule Applicability
 
-Revisiting Definition 3.2, we understand that a rule is applicable to 
+Revisiting Definition 3.2, we understand that a rule is **applicable** to 
 some arbitrary graph _G_ when an embedding function _h_ exists between 
 _L_ and _G_. This does not imply that _R_ is applicable to graph _G_; 
-_R_'s applicability is determined by a separate rule that uses _R_ as the 
-first member of its pair.
+_R_'s applicability is determined by a separate rule-witness pair that 
+uses _R_ as the first member of its pair.
 
 ## Action Definition
 
-An action on a graph _G_ is the pair _(r, h)_ such that _r_ is applicable 
+An **action** on a graph _G_ is the pair _(r, h)_ such that _r_ is applicable 
 to _G_ when witnessed by function _h_.
 
 Essentially, an action is a codified transformative event for some portion of _G_; 
@@ -146,28 +149,28 @@ the transformation is effected on a portion of _G_ defined by _r_.
 
 ### Action's Impact on _G_
 
-The application of an action to _G_, producing _G'_, has the following effects:
+The **application** of an action to _G_, producing _G'_, has the following effects:
 
 * _V' = V_; the magnitude and member identities of _V_ do not change.
 * _E'_ is produced; it consists of the union of all edges in _R_ and the 
-  set difference _E - { e | e is a member of L }_.
-* _l'_ is produced; it stipulates that labels do not for all vertices which 
-  were not present in _L_, and labels for _L_'s vertices are changed 
+  set difference _E - { e | e &isin; E<sub>L</sub> }_.
+* _l'_ is produced; it stipulates that labels do not change for all vertices 
+  which were not present in _L_, and labels for _L_'s vertices are changed 
   according to _R_'s labeling function.
 
 ## Graph Assembly
 
 ### Graph Assembly Systems
 
-An assembly system for a graph is formally defined in Definition 3.4 and 
+An **assembly system** for a graph is formally defined in Definition 3.4 and 
 consists of a pair: _(G<sub>0</sub>, _&Phi;_)_.
 
 _G<sub>0</sub>_ represents an initial unbounded graph defined by the following 
 graph tuple:
 
-***G<sub>0</sub> = (&naturals;, &empty;, &lambda;x.a)***
+**G<sub>0</sub> = (&naturals;, &empty;, &lambda;x.a)**
 
-We can consider _&naturals;_ to be vertex identities for G<sub>0</sub>; 
+We can consider _&naturals;_ to be vertex identities for _G<sub>0</sub>_; 
 however, Example 3.1 in the paper demonstrates that these vertex labels 
 may be used interchangably with rule graphs and that they do not uniquely 
 identify vertex members in the way _identity_ is used in our definitions.
