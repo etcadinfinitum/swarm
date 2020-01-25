@@ -101,6 +101,10 @@ the rest of the universe.
 
 ### Rule Types
 
+Rules have several emergent properties which are quantified here.
+
+#### Transformative Types
+
 If we assume that _L_ and _R_ are not necessarily equal, then _E_ and/or 
 &ell; must differ. The paper further quantifies types of rules:
 
@@ -130,6 +134,13 @@ the two properties:
    or perform no action at all (so that _L_ and _R_ are equal).
 
 Some clarification on the types of rules and rule behavior is needed.
+
+#### Cyclical Types
+
+From the paper:
+
+> A rule is **acyclic** if its right hand graph contains no cycles. 
+> The left hand may contain cycles.
 
 ### Rule Applicability
 
@@ -190,4 +201,69 @@ directly:
 > rules in &Phi; may be simultaneously applicable, each possibly **via several 
 > witnesses**.
 
+## Theorems
 
+### Theorem 3.1
+
+As stated in the paper:
+
+> Let &Phi; denote an acyclic rule set. Then any cover of a graph in the 
+> reachable set is also in the reachable set. In particular, the reachable 
+> set has infinitely many isomorphism types of graph if it contains any 
+> graph with a cycle.
+
+#### Acyclic Rule Sets
+
+The paper does not rigorously define an **acyclic rule set**. The agreed-upon 
+definition we use here is based off of the definition of an acyclic rule: 
+
+> A rule is **acyclic** if its right hand graph contains no cycles. 
+> The left hand may contain cycles.
+
+Extending this to a rule set, we conclude that an acyclic rule set contains 
+no rules whose right hand graph contains cycles.
+
+#### Proof
+
+The proof in the paper is reasonably clear in its approach, even if the 
+reader's knowledge of algebraic topology leaves much to be desired. The 
+proof begins with an arbitrary N-way cover of _G_ and shows that the 
+same ruleset which disassembles the cover may also disassemble _G_. 
+
+An example of this behavior in the construction of an N-way cover is 
+as follows:
+
+Construct a ruleset which produces covers. The ruleset presented here 
+produces an unlimited number of stable graphs, and the smallest stable 
+graph is a 3-node cycle.
+
+```
+phi = { a a --> b-c
+        a c --> d-e
+        b d --> f-g }
+```
+
+![small stable graph example](./img/th3.1_1.png)
+
+We can confirm that this ruleset meets the preconditions of the theorem; 
+&Phi; is acyclic.
+
+We can show that the third rule can be witnessed in several different 
+ways, and that particular witness combinations produce node chains that result in 
+stable (and by definition reachable) covers of the 3-node cycle.
+
+![cover example](./img/th3.1_2.png)
+
+#### Implications
+
+Several observations come to mind:
+
+1. Formation of covers of cyclic graphs can be eliminated by specifying a 
+   rule in &Phi; where _L_ is a single connected graph. However, if 
+   this rule is constructive, the rule set is no longer acyclic.
+2. The author's remark in Example 3.2 states `Theorem 3.1 implies 
+   binary rules are insufficient to construct a unique stable cycle`. 
+   We see this illustrated clearly in the example given above.
+3. The formation of a cover may always be undone by specifying a destructive 
+   rule, one which spans a node chain that is not present in the trivial 
+   cover. _This is an important consideration for Theorem 3.2._
