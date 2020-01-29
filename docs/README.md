@@ -267,3 +267,93 @@ Several observations come to mind:
 3. The formation of a cover may always be undone by specifying a destructive 
    rule, one which spans a node chain that is not present in the trivial 
    cover. _This is an important consideration for Theorem 3.2._
+
+### Theorem 3.2
+
+Theorem 3.1 demonstrates that binary constructive acyclic rules may 
+produce an unbounded number of covers when the stable set of graphs for 
+some &Phi; contains the trivial cover, particulary when the trivial 
+cover contains a cycle.
+
+It is important to demonstrate how covers may be eliminated from the 
+stable set if desired, since the goal of the paper (and this author's 
+efforts) is to produce a single stable graph, even when it contains 
+cycles.
+
+Theorem 3.2 is stated as follows:
+
+> Assume that &Phi; is an acyclic rule set, and that the stable set 
+> contains a graph _G_ &isin; _S_(&Phi;) but not any of _G_'s covers. 
+> Then for each edge _e_ &isin; _E_(_G_), there exists a rule in &Phi; 
+> whose left-hand side contains a copy of every edge of some cycle in 
+> _G_ passing through _e_.
+
+#### Proof
+
+Theorem 3.1 demonstrated that when a rule set is acyclic, the reachable 
+set of graphs contains an unbounded number of covers of _G_ when _G_ 
+contains a cycle. In both theorems, the rule set is stated to be acyclic, 
+implying that _G_ as given in Theorem 3.2 must also contain all 
+covers in the reachable set.
+
+A clear distinction between the reachable and stable sets of a graph 
+assembly system must be understood. The key distinction is whether 
+a graph formation _G<sub>K</sub>_ has any rule in &Phi; which may be 
+applied; when this is true, _G<sub>K</sub>_ is by definition unstable.
+
+Under the hypothesis of Theorem 3.2, the covers which are reachable 
+cannot be stable. The definition of stable formations dictates that a 
+rule can be applied to the reachable cover. Thus, a rule must exist in 
+&Phi; which can be applied to the cover _G'_. Furthermore, this rule 
+cannot be applicable to the stable graph _G_, because _G_ is stable by 
+definition.
+
+In order to achieve these properties, what additional behaviors must 
+be exhibited by this assembly system? 
+
+1. All covers of _G_ must have some means of reverting to another state, 
+   one which may eventually lead to the stable graph _G_.
+2. The means of state transformation must not be applicable to _G_ itself.
+
+In order to satisfy these objectives, a rule must be produced where the 
+beginning state _L_ specifies a connected path which contains all edges 
+of a cycle that _G_ may produce plus at least one additional edge. 
+Whether _L_ contains a cycle is immaterial; the key constraint is that 
+_L_ is not applicable to _G_ so that _G_ is indeed stable.
+
+The example provided to illustrate Theorem 3.1 is as follows:
+
+```
+phi = { a a --> b-c
+        a c --> d-e
+        b d --> f-g }
+```
+
+In order to satisfy the hypothesis's constraints, a single rule is added:
+
+```
+phi = phi U { e-g-f-e --> e-d b-e }
+```
+
+If we apply this new rule to arbitrarily-sized covers of _G_, we discover 
+that covers are broken down without fail due to the final rule's applicability 
+to covers of _G_. 
+
+However, the rule must be designed so that it cannot be applied to _G_ itself, 
+since _G_ is defined to be stable. To achieve this, we must specify two nodes 
+in the left side of the rule which cannot belong in the same stable cycle; that 
+is, the rule must include nodes which belong to separate copies of _G_. To do 
+that, the rule must have a copy of every labeled node in _G_'s cycle plus one 
+node, and by implication, the rule must have a copy of every edge in _G_'s cycle.
+
+![destruction of covers](./img/th3.2.png)
+
+#### Implications
+
+1. The rule or rules in &Phi; which satisfy this theorem are most likely 
+   destructive, or lead to additional destructive rules. This property 
+   must be true to reduce an N-way cover to the trivial cover.
+2. The same pattern of witnesses and rules which form covers and revert 
+   the covers' state can be applied forever in loops. Supplying rules which 
+   ensure a cover is not a stable formation doesn't guarantee that the 
+   stable graph will be formed.
