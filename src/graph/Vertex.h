@@ -10,11 +10,14 @@ class Vertex {
         string label;
         string name;
     public:
-        Vertex();
+        Vertex(string n = "");
         ~Vertex();
         void setLabel(string);
         void setName(string);
         string getName();
+        string getLabel();
+        friend bool operator==(const Vertex&, const Vertex&);
+        friend bool operator<(const Vertex&, const Vertex&);
 };
 
 #endif          // VERTEX_H__

@@ -3,9 +3,9 @@
 
 using namespace std;
 
-Vertex::Vertex() {
+Vertex::Vertex(string n) {
     this->label = "";
-    this->name = "";
+    this->name = n;
 }
 
 Vertex::~Vertex() {
@@ -21,4 +21,16 @@ void Vertex::setName(string name) {
 
 string Vertex::getName() {
     return this->name;
+}
+
+string Vertex::getLabel() {
+    return this->label;
+}
+
+bool operator==(const Vertex& lhs, const Vertex& rhs) {
+    return lhs.name == rhs.name;
+}
+
+bool operator<(const Vertex& lhs, const Vertex& rhs) {
+    return lhs.name < rhs.name;
 }
