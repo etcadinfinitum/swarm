@@ -1,7 +1,7 @@
 #include "Edge.h"
 #include "Vertex.h"
 
-Edge::Edge(Vertex* v1, Vertex* v2, bool belongs) {
+Edge::Edge(shared_ptr<Vertex> v1, shared_ptr<Vertex> v2, bool belongs) {
     // keep the vertices lexographically ordered
     if (*v1 < *v2) {
         this->a = v1;
@@ -40,10 +40,10 @@ ostream& operator<<(ostream& out, const Edge& rhs) {
     return out;
 }
 
-Vertex* Edge::getFirst() const {
+shared_ptr<Vertex> Edge::getFirst() const {
     return a;
 }
 
-Vertex* Edge::getSecond() const {
+shared_ptr<Vertex> Edge::getSecond() const {
     return b;
 }

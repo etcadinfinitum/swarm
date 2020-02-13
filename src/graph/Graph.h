@@ -11,15 +11,15 @@ using namespace std;
 
 class Graph {
     private:
-        set<Edge*>* edges;
-        set<Vertex*>* vertices;
+        set<shared_ptr<Edge>>* edges;
+        set<shared_ptr<Vertex>>* vertices;
     public:
         Graph();
         ~Graph();
         bool import(string filename);
-        bool join(Vertex*, Vertex*, bool = true);
-        bool separate(Vertex*, Vertex*);
-        // TODO: operator overload for copy, ostream
+        bool join(shared_ptr<Vertex>, shared_ptr<Vertex>, bool = true);
+        bool separate(shared_ptr<Vertex>, shared_ptr<Vertex>);
+        // TODO: operator overload for ostream
 };
 
 #endif          // GRAPH_H__

@@ -2,24 +2,22 @@
 #include <string>
 #include <set>
 #include <fstream>  // std::ifstream
+#include <memory>   // std::shared_ptr, std::make_shared
 #include "Graph.h"
 #include "Vertex.h"
 #include "Edge.h"
 
 Graph::Graph() {
-    this->edges = new set<Edge*>();
-    this->vertices = new set<Vertex*>();
+    this->edges = new set<shared_ptr<Edge>>();
+    this->vertices = new set<shared_ptr<Vertex>>();
 }
 
+/**
+ * The Graph and Edge classes use smart pointers to manage 
+ * shared memory space; hence, only top-level objects are 
+ * destroyed in the Graph destructor.
+ */
 Graph::~Graph() {
-    set<Edge*>::iterator it;
-    for (it = this->edges->begin(); it != this->edges->end(); ++it) {
-        delete *it;
-    }
-    set<Vertex*>::iterator iter;
-    for (iter = this->vertices->begin(); iter != this->vertices->end(); ++iter) {
-        delete *iter;
-    }
     delete edges;
     delete vertices;
 }
@@ -62,20 +60,20 @@ bool Graph::import(string filename) {
             string first = line.substr(0, line.find(delim));
             string second = line.substr(line.find(delim) + 1, string::npos);
             // search for vertices by name
-            Vertex* f = nullptr;
-            Vertex* s = nullptr;
-            set<Vertex*>::iterator it;
+            shared_ptr<Vertex> f;
+            shared_ptr<Vertex> s;
+            set<shared_ptr<Vertex>>::iterator it;
             for (it = this->vertices->begin(); it != this->vertices->end(); ++it) {
                 if ((*it)->getName() == first) f = *it;
                 if ((*it)->getName() == second) s = *it;
             }
             // if v doesn't exist, create it
-            if (f == nullptr) {
-                f = new Vertex(first);
+            if (!f) {
+                f = make_shared<Vertex>(first);
                 this->vertices->insert(f);
             }
-            if (s == nullptr) {
-                s = new Vertex(second);
+            if (!s) {
+                s = make_shared<Vertex>(second);
                 this->vertices->insert(s);
             }
             // create new Edge
@@ -89,31 +87,30 @@ bool Graph::import(string filename) {
     return true;
 }
 
-bool Graph::join(Vertex* a, Vertex* b, bool belongs) {
-    if (a == nullptr || b == nullptr) return false;
+bool Graph::join(shared_ptr<Vertex> a, shared_ptr<Vertex> b, bool belongs) {
+    if (!a || !b) return false;
     this->vertices->insert(a);
     this->vertices->insert(b);
-    Edge* e = new Edge(a, b, belongs);
+    shared_ptr<Edge> e = make_shared<Edge>(a, b, belongs);
     bool found = false;
-    set<Edge*>::iterator it;
+    set<shared_ptr<Edge>>::iterator it;
     for (it = this->edges->begin(); it != this->edges->end(); ++it) {
         if (*e == *(*it)) {
             found = true;
         }
     }
     if (found) {
-        delete e;
         return false;
     }
     this->edges->insert(e);
     return true;
 }
 
-bool Graph::separate(Vertex* a, Vertex* b) {
-    if (a == nullptr || b == nullptr) return false;
+bool Graph::separate(shared_ptr<Vertex> a, shared_ptr<Vertex> b) {
+    if (!a || !b) return false;
     bool found = false;
-    Edge* e = new Edge(a, b, false);
-    set<Edge*>::iterator it;
+    shared_ptr<Edge> e = make_shared<Edge>(a, b, false);
+    set<shared_ptr<Edge>>::iterator it;
     for (it = this->edges->begin(); it != this->edges->end(); ++it) {
         if (*e == *(*it)) {
             this->edges->erase(it);
@@ -121,6 +118,5 @@ bool Graph::separate(Vertex* a, Vertex* b) {
             break;
         }
     }
-    if (!found) delete e;
     return found;
 }

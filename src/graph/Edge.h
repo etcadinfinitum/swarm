@@ -1,5 +1,6 @@
 #include "Vertex.h"
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -8,17 +9,17 @@ using namespace std;
 
 class Edge {
     private:
-        Vertex* a;
-        Vertex* b;
+        shared_ptr<Vertex> a;
+        shared_ptr<Vertex> b;
         bool belongs;
     public:
-        Edge(Vertex*, Vertex*, bool belongs = true);
+        Edge(shared_ptr<Vertex>, shared_ptr<Vertex>, bool belongs = true);
         ~Edge();
         friend bool operator==(const Edge& lhs, const Edge& rhs);
         friend bool operator<(const Edge&, const Edge&);
         friend ostream& operator<<(ostream&, const Edge&);
-        Vertex* getFirst() const;
-        Vertex* getSecond() const;
+        shared_ptr<Vertex> getFirst() const;
+        shared_ptr<Vertex> getSecond() const;
 };
 
 #endif          // EDGE_H__

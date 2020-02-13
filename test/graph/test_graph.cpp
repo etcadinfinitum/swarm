@@ -30,9 +30,9 @@ bool createNonEmptyGraphFromFile() {
 
 bool createNonEmptyGraphFromBoutiqueVertices() {
     Graph g;
-    Vertex* v1 = new Vertex("a");
-    Vertex* v2 = new Vertex("b");
-    Vertex* v3 = new Vertex("c");
+    shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
+    shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
+    shared_ptr<Vertex> v3 = make_shared<Vertex>("c");
     cout << "Join v1 and v2 (a, b)..." << endl;
     assert(g.join(v1, v2));
     cout << "Sep v2 and v3 (b, c) (should fail)" << endl;

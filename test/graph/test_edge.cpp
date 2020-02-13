@@ -1,5 +1,6 @@
 #include "Edge.h"
 #include "Vertex.h"
+#include <memory>
 #include <cassert>
 
 using namespace std;
@@ -17,23 +18,21 @@ int main() {
 }
 
 bool testCreation() {
-    Vertex* v1 = new Vertex("a");
-    Vertex* v2 = new Vertex("b");
+    shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
+    shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
     Edge* e1 = new Edge(v1, v2, false);
     assert(*(e1->getFirst()) == *v1);
     assert(*(e1->getSecond()) == *v2);
     delete e1;
-    delete v1;
-    delete v2;
     return true;
 }
 
 bool testEquality() {
-    Vertex* v1 = new Vertex("a");
-    Vertex* v2 = new Vertex("b");
-    Vertex* v3 = new Vertex("c");
+    shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
+    shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
+    shared_ptr<Vertex> v3 = make_shared<Vertex>("c");
     // different obj/ptr, same name
-    Vertex* v4 = new Vertex("b");
+    shared_ptr<Vertex> v4 = make_shared<Vertex>("b");
     Edge* ex1f = new Edge(v1, v2, false);
     Edge* ex1b = new Edge(v2, v1, false);
     Edge* ex2f = new Edge(v1, v3, false);
@@ -45,10 +44,6 @@ bool testEquality() {
     assert(*ex2f == *ex2b);
     assert(!(*ex1f == *ex2f));
     assert(*ex1f == *ex1repeat);
-    delete v1;
-    delete v2;
-    delete v3;
-    delete v4;
     delete ex1f;
     delete ex1b;
     delete ex2f;
@@ -59,10 +54,11 @@ bool testEquality() {
 
 bool testLessThanOperator() {
     // create vertices
-    Vertex* v1 = new Vertex("a");
-    Vertex* v2 = new Vertex("b");
-    Vertex* v3 = new Vertex("c");
-    Vertex* v4 = new Vertex("b");                       // different obj/ptr, same name
+    shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
+    shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
+    shared_ptr<Vertex> v3 = make_shared<Vertex>("c");
+    // different obj/ptr, same name
+    shared_ptr<Vertex> v4 = make_shared<Vertex>("b");
     // create edges
     Edge* e1 = new Edge(v1, v1, false);     // (a, a)
     Edge* e2 = new Edge(v2, v1, false);     // (a, b)
@@ -73,10 +69,6 @@ bool testLessThanOperator() {
     assert(*e2 < *e3);
     assert(*e1 < *e4);
     assert(!(*e1 < *e1));
-    delete v1;
-    delete v2;
-    delete v3;
-    delete v4;
     delete e1;
     delete e2;
     delete e3;
