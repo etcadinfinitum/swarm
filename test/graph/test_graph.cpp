@@ -10,12 +10,14 @@ bool createEmptyGraph();
 bool createNonEmptyGraphFromFile();
 bool createNonEmptyGraphFromBoutiqueVertices();
 bool testCopyAssignment();
+bool testCopyConstructor();
 
 int main() {
     assert(createEmptyGraph());
     assert(createNonEmptyGraphFromFile());
     assert(createNonEmptyGraphFromBoutiqueVertices());
     assert(testCopyAssignment());
+    assert(testCopyConstructor());
     return 0;
 }
 
@@ -55,6 +57,14 @@ bool testCopyAssignment() {
     assert(g.import("graph_schemas/cycleThree.txt"));
     Graph h;
     h = g;
+    assert(&g != &h);
+    return true;
+}
+
+bool testCopyConstructor() {
+    Graph g;
+    assert(g.import("graph_schemas/cycleThree.txt"));
+    Graph h(g);
     assert(&g != &h);
     return true;
 }
