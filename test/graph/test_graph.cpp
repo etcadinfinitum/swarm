@@ -9,11 +9,13 @@ using namespace std;
 bool createEmptyGraph();
 bool createNonEmptyGraphFromFile();
 bool createNonEmptyGraphFromBoutiqueVertices();
+bool testCopyAssignment();
 
 int main() {
     assert(createEmptyGraph());
     assert(createNonEmptyGraphFromFile());
     assert(createNonEmptyGraphFromBoutiqueVertices());
+    assert(testCopyAssignment());
     return 0;
 }
 
@@ -45,5 +47,14 @@ bool createNonEmptyGraphFromBoutiqueVertices() {
     assert(g.separate(v2, v3));
     cout << "Sep v2 and v3 (b, c) (should fail)..." << endl;
     assert(!g.separate(v2, v3));
+    return true;
+}
+
+bool testCopyAssignment() {
+    Graph g;
+    assert(g.import("graph_schemas/cycleThree.txt"));
+    Graph h;
+    h = g;
+    assert(&g != &h);
     return true;
 }
