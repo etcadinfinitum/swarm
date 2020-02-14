@@ -13,6 +13,25 @@ Graph::Graph() {
 }
 
 /**
+ * Copy constructor for graph class.
+ */
+Graph::Graph(const Graph& other) {
+    this->edges = new set<shared_ptr<Edge>>();
+    this->vertices = new set<shared_ptr<Vertex>>();
+    set<shared_ptr<Vertex>>::iterator it;
+    for (it = other.vertices->begin(); it != other.vertices->end(); ++it) {
+        // make copy of shared pointer
+        shared_ptr<Vertex> v(*it);
+        this->vertices->insert(v);
+    }
+    set<shared_ptr<Edge>>::iterator iter;
+    for (iter = other.edges->begin(); iter != other.edges->end(); ++iter) {
+        shared_ptr<Edge> e(*iter);
+        this->edges->insert(e);
+    }
+}
+
+/**
  * The Graph and Edge classes use smart pointers to manage 
  * shared memory space; hence, only top-level objects are 
  * destroyed in the Graph destructor.
@@ -119,4 +138,26 @@ bool Graph::separate(shared_ptr<Vertex> a, shared_ptr<Vertex> b) {
         }
     }
     return found;
+}
+
+/**
+ * Assignment Operator Overload for Graph.cpp
+ * USED FOR "DEEP" COPYING A GRAPH.
+ *
+ * This method preserves all Vertex* and Edge* objects (i.e. no copies 
+ * of these objects are created).
+ */
+Graph& Graph::operator=(const Graph& rhs) {
+    set<shared_ptr<Vertex>>::iterator it;
+    for (it = rhs.vertices->begin(); it != rhs.vertices->end(); ++it) {
+        // make copy of shared pointer
+        shared_ptr<Vertex> v(*it);
+        this->vertices->insert(v);
+    }
+    set<shared_ptr<Edge>>::iterator iter;
+    for (iter = rhs.edges->begin(); iter != rhs.edges->end(); ++iter) {
+        shared_ptr<Edge> e(*iter);
+        this->edges->insert(e);
+    }
+    return *this;
 }

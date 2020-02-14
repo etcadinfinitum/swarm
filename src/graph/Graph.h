@@ -15,10 +15,12 @@ class Graph {
         set<shared_ptr<Vertex>>* vertices;
     public:
         Graph();
+        Graph(const Graph& other);
         ~Graph();
         bool import(string filename);
         bool join(shared_ptr<Vertex>, shared_ptr<Vertex>, bool = true);
         bool separate(shared_ptr<Vertex>, shared_ptr<Vertex>);
+        Graph& operator=(const Graph& rhs);
         // TODO: operator overload for ostream
 };
 
