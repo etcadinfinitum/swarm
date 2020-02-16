@@ -201,6 +201,26 @@ directly:
 > rules in &Phi; may be simultaneously applicable, each possibly **via several 
 > witnesses**.
 
+### Graph Reachability
+
+A formation (graph) _M_ is reachable in an assembly system (_G<sub>0</sub>_, &Phi;) 
+when there is a rule in the assembly system whose right-hand side contains 
+a component which is isomorphic to _M_.
+
+This implies that the graph _M_ can be obtained in the assembly system by 
+some valid sequence of rule application.
+
+### Graph Stability
+
+Stable graphs are a subset of reachable graphs; the desired 
+formation _M_ be achieved in the assembly system. In addition, for _M_ to 
+be a stable formation in the assembly system, there are no rules in the 
+assembly system containing &Phi; which contain any part of _M_ in its 
+left-hand side.
+
+This implies that the graph _M_ has reached a terminal state in this 
+assembly system and cannot be further modified by any rules.
+
 ## Theorems
 
 ### Theorem 3.1
