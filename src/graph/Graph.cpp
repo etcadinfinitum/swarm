@@ -3,6 +3,8 @@
 #include <set>
 #include <fstream>  // std::ifstream
 #include <memory>   // std::shared_ptr, std::make_shared
+#include <queue>
+#include <iostream>
 #include "Graph.h"
 #include "Vertex.h"
 #include "Edge.h"
@@ -160,4 +162,111 @@ Graph& Graph::operator=(const Graph& rhs) {
         this->edges->insert(e);
     }
     return *this;
+}
+
+bool Graph::containsEdge(shared_ptr<Edge> e) {
+    set<shared_ptr<Edge>>::iterator it;
+    for (it = this->edges->begin(); it != this->edges->end(); ++it) {
+        if (*((*it).get()) == *(e.get())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::containsVertex(shared_ptr<Vertex> v) {
+    set<shared_ptr<Vertex>>::iterator it;
+    for (it = this->vertices->begin(); it != this->vertices->end(); ++it) {
+        if (*((*it).get()) == *(v.get())) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::addVertex(shared_ptr<Vertex> v) {
+    if (this->containsVertex(v)) {
+        return false;
+    }
+    this->vertices->insert(v);
+    return true;
+}
+
+/**
+ * This method is used to split a tree along the indicated edge into 
+ * its two disparate components.
+ *
+ * Precondition: the this object is a spanning tree with no cycles.
+ */
+pair<Graph*, Graph*>* Graph::splitTree(shared_ptr<Edge> e) {
+    Graph* g1 = new Graph();
+    Graph* g2 = new Graph();
+    if (!(this->containsEdge(e))) {
+        cerr << "Attempting to split graph along edge " << *e
+             << " which does not exist in graph." << endl;
+        delete g1;
+        delete g2;
+        return nullptr;
+    }
+    queue<shared_ptr<Vertex>> q1;
+    queue<shared_ptr<Vertex>> q2;
+    q1.push(e->getFirst());
+    q2.push(e->getSecond());
+    // fan out from vertex in q1; check for edges which contain v1, call join in g1 if found, otherwise add vertex only
+    while (!q1.empty()) {
+        shared_ptr<Vertex> v = q1.front();
+        q1.pop();
+        set<shared_ptr<Edge>>::iterator it;
+        for (it = this->edges->begin(); it != this->edges->end(); ++it) {
+            // edge case: edge found is the edge being split along
+            if (*((*it).get()) == *(e.get())) continue;
+            // edge case: edge has already been added to g1
+            if (g1->containsEdge(*it)) continue;
+            if (*((*it)->getFirst()) == *v) {
+                g1->join(v, (*it)->getSecond());
+                q1.push((*it)->getSecond());
+            } else if (*((*it)->getSecond()) == *v) {
+                g1->join(v, (*it)->getFirst());
+                q1.push((*it)->getFirst());
+            }
+        }
+        g1->addVertex(v);
+    }
+    // repeat for q2/g2
+    while (!q2.empty()) {
+        shared_ptr<Vertex> v = q2.front();
+        q2.pop();
+        set<shared_ptr<Edge>>::iterator it;
+        for (it = this->edges->begin(); it != this->edges->end(); ++it) {
+            // edge case: edge found is the edge being split along
+            if (*((*it).get()) == *(e.get())) continue;
+            // edge case: edge has already been added to g1
+            if (g2->containsEdge(*it)) continue;
+            if (*((*it)->getFirst()) == *v) {
+                g2->join(v, (*it)->getSecond());
+                q2.push((*it)->getSecond());
+            } else if (*((*it)->getSecond()) == *v) {
+                g2->join(v, (*it)->getFirst());
+                q2.push((*it)->getFirst());
+            }
+        }
+        g2->addVertex(v);
+    }
+    return new pair<Graph*, Graph*>(g1, g2);
+}
+
+ostream& operator<<(ostream& out, const Graph& obj) {
+    out << "Vertices by name: ";
+    set<shared_ptr<Vertex>>::iterator iter;
+    for (iter = obj.vertices->begin(); iter != obj.vertices->end(); ++iter) {
+        out << *((*iter).get()) << ", ";
+    }
+    out << "\n";
+    out << "Edges by name: ";
+    set<shared_ptr<Edge>>::iterator it;
+    for (it = obj.edges->begin(); it != obj.edges->end(); ++it) {
+        out << *((*it).get()) << ", ";
+    }
+    out << "\n";
+    return out;
 }

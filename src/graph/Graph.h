@@ -20,8 +20,12 @@ class Graph {
         bool import(string filename);
         bool join(shared_ptr<Vertex>, shared_ptr<Vertex>, bool = true);
         bool separate(shared_ptr<Vertex>, shared_ptr<Vertex>);
+        bool containsEdge(shared_ptr<Edge>);
+        bool containsVertex(shared_ptr<Vertex>);
+        bool addVertex(shared_ptr<Vertex>);
+        pair<Graph*, Graph*>* splitTree(shared_ptr<Edge> e);
         Graph& operator=(const Graph& rhs);
-        // TODO: operator overload for ostream
+        friend ostream& operator<<(ostream&, const Graph&);
 };
 
 #endif          // GRAPH_H__

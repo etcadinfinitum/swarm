@@ -34,3 +34,8 @@ bool operator==(const Vertex& lhs, const Vertex& rhs) {
 bool operator<(const Vertex& lhs, const Vertex& rhs) {
     return lhs.name < rhs.name;
 }
+
+ostream& operator<<(ostream& o, const Vertex& obj) {
+    o << obj.name;
+    return o;
+}

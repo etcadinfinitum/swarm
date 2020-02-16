@@ -18,6 +18,7 @@ class Vertex {
         string getLabel();
         friend bool operator==(const Vertex&, const Vertex&);
         friend bool operator<(const Vertex&, const Vertex&);
+        friend ostream& operator<<(ostream&, const Vertex&);
 };
 
 #endif          // VERTEX_H__
