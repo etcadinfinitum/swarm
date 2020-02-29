@@ -40,7 +40,7 @@ representations of the graph with copies of the cubic node. We discover that we
 cannot produce certain arbitrary graphs and retain local isomorphism properties.
 
 Figure 1: Producing 4- and 5-node cycles using cubes.
-[figure 1 image](./docs/img/readme_fig1.png)
+![figure 1 image](./docs/img/readme_fig1.png)
 
 In this example, no matter where we place the 5th node (gold), the local 
 isomorphic properties of each node in a 5-node cycle cannot be upheld; there 
@@ -60,7 +60,7 @@ We consider a very simple graph which models a 4-node list, and see that
 many 3-dimensional graphs can be produced with cubic nodes.
 
 Figure 2: Producing 4-node "list" graphs.
-[figure 2 image](./docs/img/readme_fig2.png)
+![figure 2 image](./docs/img/readme_fig2.png)
 
 Each of the configurations provided in Fig 2 is a valid isomorphism of the 
 input graph, and a system which builds grammars for graph formation where 
