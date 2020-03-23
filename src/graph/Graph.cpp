@@ -108,8 +108,17 @@ bool Graph::import(string filename) {
     return true;
 }
 
+/**
+ * This method forms an edge between the provided vertices.
+ *
+ * It does not allow: MULTIGRAPH properties or SELF-CONNECTED vertices.
+ *
+ * Returns: T/F indicating whether unique edge was added to graph.
+ */
 bool Graph::join(shared_ptr<Vertex> a, shared_ptr<Vertex> b, bool belongs) {
     if (!a || !b) return false;
+    // do not allow self-connection
+    if (*(a.get()) == *(b.get())) return false;
     this->vertices->insert(a);
     this->vertices->insert(b);
     shared_ptr<Edge> e = make_shared<Edge>(a, b, belongs);
@@ -269,4 +278,12 @@ ostream& operator<<(ostream& out, const Graph& obj) {
     }
     out << "\n";
     return out;
+}
+
+set<shared_ptr<Vertex>>* Graph::getVertices() {
+    return this->vertices;
+}
+
+set<shared_ptr<Edge>>* Graph::getEdges() {
+    return this->edges;
 }

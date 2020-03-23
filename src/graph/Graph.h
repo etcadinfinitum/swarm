@@ -26,6 +26,8 @@ class Graph {
         pair<Graph*, Graph*>* splitTree(shared_ptr<Edge> e);
         Graph& operator=(const Graph& rhs);
         friend ostream& operator<<(ostream&, const Graph&);
+        set<shared_ptr<Vertex>>* getVertices();
+        set<shared_ptr<Edge>>* getEdges();
 };
 
 #endif          // GRAPH_H__

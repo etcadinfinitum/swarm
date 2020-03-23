@@ -42,6 +42,8 @@ bool createNonEmptyGraphFromBoutiqueVertices() {
     shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
     shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
     shared_ptr<Vertex> v3 = make_shared<Vertex>("c");
+    cout << "Join v1 and v1 (a, a) (should fail)" << endl;
+    assert(!g.join(v1, v1));
     cout << "Join v1 and v2 (a, b)..." << endl;
     assert(g.join(v1, v2));
     cout << "Sep v2 and v3 (b, c) (should fail)" << endl;
