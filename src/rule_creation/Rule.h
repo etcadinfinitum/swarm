@@ -7,6 +7,9 @@
 
 using namespace std;
 
+#ifndef RULE_H__
+#define RULE_H__ 
+
 class Rule {
     private:
         Graph* initialState = nullptr;
@@ -26,3 +29,5 @@ class Rule {
         Graph* getLeftGraph() const;
         Graph* getRightGraph() const;
 };
+
+#endif              // RULE_H__
