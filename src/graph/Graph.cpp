@@ -5,6 +5,8 @@
 #include <memory>   // std::shared_ptr, std::make_shared
 #include <queue>
 #include <iostream>
+#include <cstdlib>  // std::rand, std::srand
+#include <ctime>    // std::time, used for std::srand
 #include "Graph.h"
 #include "Vertex.h"
 #include "Edge.h"
@@ -286,4 +288,71 @@ set<shared_ptr<Vertex>>* Graph::getVertices() {
 
 set<shared_ptr<Edge>>* Graph::getEdges() {
     return this->edges;
+}
+
+shared_ptr<Vertex> Graph::getRandomVertex() {
+    srand(time(nullptr));
+    int idx = rand() % this->vertices->size();
+    set<shared_ptr<Vertex>>::iterator it = this->vertices->begin();
+    advance(it, idx);
+    return *it;
+}
+
+/**
+ * Creates a copy of the current graph as a minimal 
+ * spanning tree using Prim's algorithm.
+ * 
+ * A standard queue is used for this implementation because 
+ * none of the edges in this graph schema have weights.
+ */
+Graph* Graph::getSpanningTree() {
+    if (this->vertices->empty()) return nullptr;
+    Graph* tree = new Graph();
+    // Choose arbitrary starting point of this graph
+    shared_ptr<Vertex> start = this->getRandomVertex();
+    tree->addVertex(start);
+    // create queue for neighbor edges to process
+    queue<shared_ptr<Edge>> q;
+    // add all edges at starting point to queue
+    set<shared_ptr<Edge>>::iterator it;
+    for (it = this->edges->begin(); it != this->edges->end(); ++it) {
+        if (*((*it)->getFirst()) == *start) q.push(*it);
+        if (*((*it)->getSecond()) == *start) q.push(*it);
+    }
+    while (!q.empty()) {
+        // pop queue item
+        shared_ptr<Edge> next = q.front();
+        q.pop();
+        // find which vertex is not already in graph; if both are in, continue
+        shared_ptr<Vertex> a = next->getFirst();
+        shared_ptr<Vertex> b = next->getSecond();
+        if (tree->containsVertex(a) && tree->containsVertex(b)) continue;
+        // for each neighbor of that vertex, add corresponding edge to queue
+        if (!tree->containsVertex(a)) {
+            set<shared_ptr<Edge>>::iterator iter;
+            for (iter = this->edges->begin(); iter != this->edges->end(); ++iter) {
+                if (*((*iter)->getFirst()) == *a &&
+                        !tree->containsVertex((*iter)->getSecond())) {
+                    q.push(*iter);
+                } else if (*((*iter)->getSecond()) == *a &&
+                        !tree->containsVertex((*iter)->getFirst())) {
+                    q.push(*iter);
+                }
+            }
+        } else {
+            set<shared_ptr<Edge>>::iterator iter;
+            for (iter = this->edges->begin(); iter != this->edges->end(); ++iter) {
+                if (*((*iter)->getFirst()) == *b &&
+                        !tree->containsVertex((*iter)->getSecond())) {
+                    q.push(*iter);
+                } else if (*((*iter)->getSecond()) == *b &&
+                        !tree->containsVertex((*iter)->getFirst())) {
+                    q.push(*iter);
+                }
+            }
+        }
+        // add vertices and popped edge to tree graph
+        tree->join(a, b);
+    }
+    return tree;
 }

@@ -13,6 +13,7 @@ class Graph {
     private:
         set<shared_ptr<Edge>>* edges;
         set<shared_ptr<Vertex>>* vertices;
+        shared_ptr<Vertex> getRandomVertex();
     public:
         Graph();
         Graph(const Graph& other);
@@ -28,6 +29,7 @@ class Graph {
         friend ostream& operator<<(ostream&, const Graph&);
         set<shared_ptr<Vertex>>* getVertices();
         set<shared_ptr<Edge>>* getEdges();
+        Graph* getSpanningTree();
 };
 
 #endif          // GRAPH_H__

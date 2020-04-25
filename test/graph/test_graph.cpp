@@ -13,6 +13,7 @@ bool testCopyAssignment();
 bool testCopyConstructor();
 bool testTreeSplitting();
 bool testTreeSplittingFailure();
+bool testSpanningTreeCreation();
 
 int main() {
     assert(createEmptyGraph());
@@ -22,6 +23,7 @@ int main() {
     assert(testCopyConstructor());
     assert(testTreeSplitting());
     assert(testTreeSplittingFailure());
+    assert(testSpanningTreeCreation());
     return 0;
 }
 
@@ -137,6 +139,41 @@ bool testTreeSplittingFailure() {
     shared_ptr<Edge> eFail = make_shared<Edge>(v1, v4);
     pair<Graph*, Graph*>* split1 = g.splitTree(eFail);
     assert(split1 == nullptr);
+    cout << endl;
+    return true;
+}
+
+bool testSpanningTreeCreation() {
+    cout << "Testing spanning tree creation...\n";
+    Graph g;
+    assert(g.import("graph_schemas/kite.txt"));
+    Graph* kiteTree = g.getSpanningTree();
+    assert(kiteTree->getVertices()->size() == g.getVertices()->size());
+    assert(kiteTree->getEdges()->size() + 1 == kiteTree->getVertices()->size());
+
+    Graph h;
+    shared_ptr<Vertex> v1 = make_shared<Vertex>("a");
+    shared_ptr<Vertex> v2 = make_shared<Vertex>("b");
+    shared_ptr<Vertex> v3 = make_shared<Vertex>("c");
+    shared_ptr<Vertex> v4 = make_shared<Vertex>("d");
+    h.addVertex(v1);
+    h.addVertex(v2);
+    h.addVertex(v3);
+    h.addVertex(v4);
+    Graph* singleTree = h.getSpanningTree();
+    assert(singleTree->getEdges()->size() == 0);
+    assert(singleTree->getVertices()->size() == 1);
+
+    h.join(v2, v3);
+    h.join(v1, v2);
+    h.join(v2, v4);
+    Graph* wheel = h.getSpanningTree();
+    assert(wheel->getEdges()->size() == 3);
+    assert(wheel->getVertices()->size() == 4);    
+
+    delete kiteTree;
+    delete singleTree;
+    delete wheel;
     cout << endl;
     return true;
 }

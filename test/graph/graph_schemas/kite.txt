@@ -1,0 +1,7 @@
+A*C
+A*B
+B*C
+A*D
+C*D
+D*E
+E*B
