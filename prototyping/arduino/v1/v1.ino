@@ -13,8 +13,8 @@
 // Declare pin numbers for serial communication between boards,
 // and initialize the serial line object.
 // In this example, we use pins 0 and 1 for the Elegoo Uno R3 per datasheet
-#define RX 0
-#define TX 1
+#define RX 2
+#define TX 3
 SoftwareSerial comms(RX, TX);
 
 // Declare variables for manual cycling of board's label.
@@ -191,7 +191,7 @@ void performStateChange() {
         color(255, 150, 5);   // orange-ish
         Serial.println("SoftwareSerial comms are not available; check that all boards are powered and connected.");
     }
-    comms.listen();
+    // comms.listen();
 }
 
 int findLabel(int otherNode) {
