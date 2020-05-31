@@ -18,6 +18,6 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-./execute $1
+./execute $1 | python3 device_adaption/arduino/generator.py
 
 rm ./execute

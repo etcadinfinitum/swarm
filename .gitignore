@@ -1,3 +1,8 @@
 vgcore*
 .*.sw?
 *.o
+
+__pycache__/
+*.pyc
+
+**/output/
