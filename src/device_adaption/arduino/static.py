@@ -90,7 +90,6 @@ void loop() {
         // Check to see if button for board was pressed; 
         // if so; label needs to be cycled.
         if (digitalRead(BUTTON_PIN) == HIGH) {
-            Serial.println("Cycling label because button press was detected.");
             cycleLabel();
             return;
         }
@@ -134,9 +133,9 @@ void performStateChange() {
     if (comms.available()) {
         int charcount = comms.available();
         char incomingValue = comms.read();
-        Serial.println("Char is " + String(incomingValue) + "; int is " + String((uint8_t) incomingValue));
-        Serial.println("There were a total of " + String(charcount) + " characters available.");
-        Serial.println("Read neighbor label is: " + String(incomingValue));
+        // Serial.println("Char is " + String(incomingValue) + "; int is " + String((uint8_t) incomingValue));
+        // Serial.println("There were a total of " + String(charcount) + " characters available.");
+        // Serial.println("Read neighbor label is: " + String(incomingValue));
         // Check ruleset for values; perform label transition if 
         // two nodes are valid, and require connection break (reset) 
         // if nodes do not belong in valid rule.
@@ -208,7 +207,7 @@ void disconnect(int v) {
 void cycleLabel() {
     // Set LED, print label cycling initiated
     color(255, 0, 255);
-    Serial.println("Cycling label for this node.");
+    // Serial.println("Cycling label for this node.");
     Serial.print("Old label: " + String(CURR_LABEL));
     // Increment label index and update internal state of node
     CURR_LABEL_INDEX = (CURR_LABEL_INDEX + 1) % MAX_LABELS;
