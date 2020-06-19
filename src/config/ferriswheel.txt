@@ -1,0 +1,16 @@
+A*B
+B*C
+C*D
+D*E
+E*F
+F*G
+G*H
+H*A
+A*J
+B*J
+C*J
+D*J
+E*J
+F*J
+G*J
+H*J
